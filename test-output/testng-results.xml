@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="2" ignored="2" total="15" passed="11">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="21787" started-at="2018-12-16T15:55:45Z" finished-at="2018-12-16T15:56:07Z">
+    <groups>
+      <group name="Cancel the Order after Completed">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.cancelTheOrderAfterCompleted()[pri:8, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelTheOrderAfterCompleted" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- Cancel the Order after Completed -->
+      <group name="Cancel the order after cancelled">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.cancelTheOrderAfterCancel()[pri:9, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelTheOrderAfterCancel" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- Cancel the order after cancelled -->
+      <group name="complete the new Order">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.CompleteTheOrderDetails()[pri:5, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderDetails" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.fetchTheOrderDetails()[pri:3, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="fetchTheOrderDetails" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.takeTheOrderDetails()[pri:4, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="takeTheOrderDetails" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- complete the new Order -->
+      <group name="Cancel the new Order">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.cancelOrder()[pri:2, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelOrder" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.placeNewOrderInPresent()[pri:1, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="placeNewOrderInPresent" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- Cancel the new Order -->
+      <group name="Complete the order after Completed">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.CompleteTheOrderAfterCompleted()[pri:7, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderAfterCompleted" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- Complete the order after Completed -->
+      <group name="Complete the Order after Cancelled">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.CompleteTheOrderAfterCancel()[pri:10, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderAfterCancel" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- Complete the Order after Cancelled -->
+      <group name="complete the Order just after creation">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.CompleteTheNewOrder()[pri:6, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheNewOrder" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- complete the Order just after creation -->
+      <group name="place order with wrong body">
+        <method signature="TestcasesForOrderPlacedInPresentNFuture.fetchTheOrderDetailsNotCreated()[pri:11, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="fetchTheOrderDetailsNotCreated" class="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture"/>
+      </group> <!-- place order with wrong body -->
+    </groups>
+    <test name="Order Flow Test for present payload json" duration-ms="20422" started-at="2018-12-16T15:55:45Z" finished-at="2018-12-16T15:56:06Z">
+      <class name="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="255" started-at="2018-12-16T15:55:45Z" finished-at="2018-12-16T15:55:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="placeNewOrderInPresent()[pri:1, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="placeNewOrderInPresent" duration-ms="4498" started-at="2018-12-16T15:55:45Z" finished-at="2018-12-16T15:55:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- placeNewOrderInPresent -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:55:50Z" finished-at="2018-12-16T15:55:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="cancelOrder()[pri:2, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelOrder" duration-ms="564" started-at="2018-12-16T15:55:50Z" finished-at="2018-12-16T15:55:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cancelOrder -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:55:51Z" finished-at="2018-12-16T15:55:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="fetchTheOrderDetails()[pri:3, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="fetchTheOrderDetails" duration-ms="1819" started-at="2018-12-16T15:55:51Z" finished-at="2018-12-16T15:55:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- fetchTheOrderDetails -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="0" started-at="2018-12-16T15:55:52Z" finished-at="2018-12-16T15:55:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="takeTheOrderDetails()[pri:4, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="takeTheOrderDetails" duration-ms="494" started-at="2018-12-16T15:55:52Z" finished-at="2018-12-16T15:55:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeTheOrderDetails -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="2" started-at="2018-12-16T15:55:53Z" finished-at="2018-12-16T15:55:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="CompleteTheOrderDetails()[pri:5, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderDetails" duration-ms="447" started-at="2018-12-16T15:55:53Z" finished-at="2018-12-16T15:55:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CompleteTheOrderDetails -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:55:53Z" finished-at="2018-12-16T15:55:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="CompleteTheNewOrder()[pri:6, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheNewOrder" duration-ms="1583" started-at="2018-12-16T15:55:53Z" finished-at="2018-12-16T15:55:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CompleteTheNewOrder -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:55:55Z" finished-at="2018-12-16T15:55:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="CompleteTheOrderAfterCompleted()[pri:7, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderAfterCompleted" duration-ms="2537" started-at="2018-12-16T15:55:55Z" finished-at="2018-12-16T15:55:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CompleteTheOrderAfterCompleted -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:55:57Z" finished-at="2018-12-16T15:55:57Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="cancelTheOrderAfterCompleted()[pri:8, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelTheOrderAfterCompleted" duration-ms="2842" started-at="2018-12-16T15:55:57Z" finished-at="2018-12-16T15:56:00Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cancelTheOrderAfterCompleted -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:56:00Z" finished-at="2018-12-16T15:56:00Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="FAIL" signature="cancelTheOrderAfterCancel()[pri:9, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="cancelTheOrderAfterCancel" duration-ms="2638" started-at="2018-12-16T15:56:00Z" finished-at="2018-12-16T15:56:03Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Status code is not 422 expected [422] but found [200]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Status code is not 422 expected [422] but found [200]
+at org.testng.Assert.fail(Assert.java:96)
+at org.testng.Assert.failNotEquals(Assert.java:776)
+at org.testng.Assert.assertEqualsImpl(Assert.java:137)
+at org.testng.Assert.assertEquals(Assert.java:118)
+at org.testng.Assert.assertEquals(Assert.java:652)
+at com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture.CommonUtilityForResponseCode422(TestcasesForOrderPlacedInPresentNFuture.java:244)
+at com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture.cancelTheOrderAfterCancel(TestcasesForOrderPlacedInPresentNFuture.java:311)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+at java.lang.reflect.Method.invoke(Unknown Source)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cancelTheOrderAfterCancel -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="0" started-at="2018-12-16T15:56:03Z" finished-at="2018-12-16T15:56:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="CompleteTheOrderAfterCancel()[pri:10, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="CompleteTheOrderAfterCancel" duration-ms="2331" started-at="2018-12-16T15:56:03Z" finished-at="2018-12-16T15:56:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CompleteTheOrderAfterCancel -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:56:05Z" finished-at="2018-12-16T15:56:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="fetchTheOrderDetailsNotCreated()[pri:11, instance:com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture@71423665]" name="fetchTheOrderDetailsNotCreated" duration-ms="288" started-at="2018-12-16T15:56:05Z" finished-at="2018-12-16T15:56:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- fetchTheOrderDetailsNotCreated -->
+      </class> <!-- com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture -->
+    </test> <!-- Order Flow Test for present payload json -->
+    <test name="Order Flow Test" duration-ms="1259" started-at="2018-12-16T15:56:06Z" finished-at="2018-12-16T15:56:07Z">
+      <class name="com.nagarro.TestCases.PlaceOrderInPastorWrongJson">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.PlaceOrderInPastorWrongJson@2b9627bc]" name="setUp" is-config="true" duration-ms="1" started-at="2018-12-16T15:56:06Z" finished-at="2018-12-16T15:56:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="placeNewOrderInPastorWrongJson()[pri:0, instance:com.nagarro.TestCases.PlaceOrderInPastorWrongJson@2b9627bc]" name="placeNewOrderInPastorWrongJson" duration-ms="506" started-at="2018-12-16T15:56:06Z" finished-at="2018-12-16T15:56:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- placeNewOrderInPastorWrongJson -->
+      </class> <!-- com.nagarro.TestCases.PlaceOrderInPastorWrongJson -->
+      <class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.nagarro.TestCases.PlaceOrderWithAllSameStop@65e2dbf3]" name="setUp" is-config="true" duration-ms="143" started-at="2018-12-16T15:56:06Z" finished-at="2018-12-16T15:56:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="FAIL" signature="placeNewOrderWithAllSameStop()[pri:0, instance:com.nagarro.TestCases.PlaceOrderWithAllSameStop@65e2dbf3]" name="placeNewOrderWithAllSameStop" duration-ms="595" started-at="2018-12-16T15:56:06Z" finished-at="2018-12-16T15:56:07Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected [0] but found [20.00]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected [0] but found [20.00]
+at org.testng.Assert.fail(Assert.java:96)
+at org.testng.Assert.failNotEquals(Assert.java:776)
+at org.testng.Assert.assertEqualsImpl(Assert.java:137)
+at org.testng.Assert.assertEquals(Assert.java:118)
+at org.testng.Assert.assertEquals(Assert.java:442)
+at com.nagarro.TestCases.PlaceOrderWithAllSameStop.placeNewOrderWithAllSameStop(PlaceOrderWithAllSameStop.java:80)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+at java.lang.reflect.Method.invoke(Unknown Source)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- placeNewOrderWithAllSameStop -->
+      </class> <!-- com.nagarro.TestCases.PlaceOrderWithAllSameStop -->
+    </test> <!-- Order Flow Test -->
+  </suite> <!-- Suite -->
+</testng-results>

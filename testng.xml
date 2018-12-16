@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<test name="Order Flow Test for present payload json"
+		preserve-order="true">
+		<groups>
+			<run>
+				<include name="Cancel the new Order" />
+				<include name="complete the new Order" />
+				<include name="complete the Order just after creation" />
+				<include name="Complete the order after Completed" />
+				<include name="Cancel the Order after Completed" />
+				<include name="Cancel the order after cancelled" />
+				<include name="Complete the Order after Cancelled" />
+				<include name="place order with wrong body" />
+			</run>
+
+		</groups>
+		<classes>
+			<class
+				name="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture" />
+			<class name="com.nagarro.TestCases.PlaceOrderInPastorWrongJson" />
+			<class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop" />
+		</classes>
+	</test>
+	<test name="Order Flow Test" preserve-order="true">
+		<classes>
+			<class name="com.nagarro.TestCases.PlaceOrderInPastorWrongJson" />
+			<class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop" />
+		</classes>
+	</test>
+</suite>

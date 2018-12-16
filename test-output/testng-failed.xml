@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test thread-count="5" name="Order Flow Test for present payload json(failed)">
+    <groups>
+      <run>
+        <include name="Cancel the new Order"/>
+        <include name="complete the new Order"/>
+        <include name="complete the Order just after creation"/>
+        <include name="Complete the order after Completed"/>
+        <include name="Cancel the Order after Completed"/>
+        <include name="Cancel the order after cancelled"/>
+        <include name="Complete the Order after Cancelled"/>
+        <include name="place order with wrong body"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture">
+        <methods>
+          <include name="cancelTheOrderAfterCancel"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture -->
+    </classes>
+  </test> <!-- Order Flow Test for present payload json(failed) -->
+  <test thread-count="5" name="Order Flow Test(failed)">
+    <classes>
+      <class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop">
+        <methods>
+          <include name="setUp"/>
+          <include name="placeNewOrderWithAllSameStop"/>
+        </methods>
+      </class> <!-- com.nagarro.TestCases.PlaceOrderWithAllSameStop -->
+    </classes>
+  </test> <!-- Order Flow Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
