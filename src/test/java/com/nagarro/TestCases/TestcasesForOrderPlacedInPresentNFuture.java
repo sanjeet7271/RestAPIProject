@@ -152,7 +152,8 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		int time = Integer.parseInt(timeStamp);
 		logger.info("time captured" + time);
 		if (createdTime.equals(orderDateTime)) {
-			if (time >= 21 && time <= 23.59 || time >= 0 && time <= 5) {
+			if (time >= FrameworkConstants.MORETHAN9PM && time <= FrameworkConstants.LESSTHAN11_59PM
+					|| time >= FrameworkConstants.LESSTHAN0AM && time <= FrameworkConstants.LESSTHAN5AM) {
 				double calculateamount = travelCostCalculation.TravelCostInBetween9to5TimeStamp(sumOfDistance);
 				logger.info("Calculted Cost :" + calculateamount);
 				Map<String, String> orderFares = response.jsonPath().getMap("fare");
@@ -170,7 +171,8 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 				Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
 			}
 		} else {
-			if (time >= 21 && time <= 23.59 || time >= 0 && time <= 5) {
+			if (time >= FrameworkConstants.MORETHAN9PM && time <= FrameworkConstants.LESSTHAN11_59PM
+					|| time >= FrameworkConstants.LESSTHAN0AM && time <= FrameworkConstants.LESSTHAN5AM) {
 				double calculateamount = travelCostCalculation.TravelCostInBetween9to5TimeStamp(sumOfDistance);
 				logger.info("Calculted Cost :" + calculateamount);
 				Map<String, String> orderFares = response.jsonPath().getMap("fare");

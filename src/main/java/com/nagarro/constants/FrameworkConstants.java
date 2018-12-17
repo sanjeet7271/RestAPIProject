@@ -27,4 +27,10 @@ public class FrameworkConstants {
 	public static final int FIRST2KMCOSTN = 30;
 	public static final int MORETHANFIRST2KMCOSTN = 8;
 
+	//Time Stamps in between 9pm to 5am
+	public static final double MORETHAN9PM = 21;
+	public static final double LESSTHAN11_59PM =23.59 ;
+	public static final double LESSTHAN0AM =0 ;
+	public static final double LESSTHAN5AM =5 ;
+	
 }
