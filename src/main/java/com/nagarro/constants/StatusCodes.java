@@ -4,7 +4,7 @@ package com.nagarro.constants;
  * Different Status Code
  * 
  */
-public class StatusCode {
+public class StatusCodes {
 	public static int RESPONSE_STATUS_CODE_200 = 200;
 	public static int RESPONSE_STATUS_CODE_201 = 201;
 	public static int RESPONSE_STATUS_CODE_400 = 400;

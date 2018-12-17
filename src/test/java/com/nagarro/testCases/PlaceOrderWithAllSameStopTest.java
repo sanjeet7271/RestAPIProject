@@ -1,4 +1,4 @@
-package com.nagarro.TestCases;
+package com.nagarro.testCases;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,17 +14,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.response.Response;
-import com.nagarro.Global.GlobalReader;
-import com.nagarro.RestAssured.RestAssuredClient;
 import com.nagarro.constants.FrameworkConstants;
-import com.nagarro.constants.StatusCode;
+import com.nagarro.constants.StatusCodes;
+import com.nagarro.global.BaseTest;
+import com.nagarro.restassured.RestAssuredClient;
 
 /**
  * 
  * @author sanjeetpandit
  *
  */
-public class PlaceOrderWithAllSameStop extends GlobalReader {
+public class PlaceOrderWithAllSameStopTest extends BaseTest {
 	String placeOrderurl;
 	ObjectMapper mapper;
 	Response response;
@@ -32,7 +32,7 @@ public class PlaceOrderWithAllSameStop extends GlobalReader {
 	RestAssuredClient restAssuredClient;
 	JsonNode presentJson;
 
-	public PlaceOrderWithAllSameStop() throws IOException {
+	public PlaceOrderWithAllSameStopTest() throws IOException {
 		super();
 	}
 
@@ -65,7 +65,7 @@ public class PlaceOrderWithAllSameStop extends GlobalReader {
 		}
 		response = restAssuredClient.requestPostCall(placeOrderurl, presentJson.toString());
 		responseCode = response.getStatusCode();
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_201);
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_201);
 		int id = response.jsonPath().get("id");
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
@@ -73,11 +73,11 @@ public class PlaceOrderWithAllSameStop extends GlobalReader {
 		logger.info("All distances :" + orderDistances);
 		int distance = orderDistances.get(0);
 		logger.info("1st distance :" + distance);
-		Assert.assertEquals(distance, FrameworkConstants.ZEROKMDISTANCE);
+		Assert.assertEquals(distance, FrameworkConstants.ZERO_KM_DISTANCE);
 		Map<String, String> orderFares = response.jsonPath().getMap("fare");
 		String amount = orderFares.get("amount");
 		logger.info("amount :" + amount);
-		Assert.assertEquals(amount, FrameworkConstants.ZEROKMCOST);
+		Assert.assertEquals(amount, FrameworkConstants.ZERO_KM_DISTANCE);
 	}
 
 }

@@ -3,12 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop">
+      <class name="com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFutureTest">
         <methods>
           <include name="setUp"/>
-          <include name="placeNewOrderWithAllSameStop"/>
+          <include name="cancelTheOrderAfterCancel"/>
         </methods>
-      </class> <!-- com.nagarro.TestCases.PlaceOrderWithAllSameStop -->
+      </class> <!-- com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFutureTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

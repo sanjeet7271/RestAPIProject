@@ -1,4 +1,4 @@
-package com.nagarro.TestCases;
+package com.nagarro.testCases;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,34 +14,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.response.Response;
-import com.nagarro.Global.GlobalReader;
-import com.nagarro.RestAssured.RestAssuredClient;
-import com.nagarro.Util.TravelCostCalculation;
 import com.nagarro.constants.FrameworkConstants;
-import com.nagarro.constants.StatusCode;
+import com.nagarro.constants.StatusCodes;
+import com.nagarro.global.BaseTest;
+import com.nagarro.restassured.RestAssuredClient;
+import com.nagarro.util.FareCalculationService;
 
-public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
+/**
+ * Test cases to place an Order, Fetch the Order, take the Order and Complete or
+ * cancel the Order
+ * 
+ * @author sanjeetpandit
+ *
+ */
+public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	String placeOrderurl;
 	ObjectMapper mapper;
 	Response response;
 	int responseCode;
 	RestAssuredClient restAssuredClient;
-	JsonNode Json;
+	JsonNode json;
 	int id;
 	String canceltheOrder;
 	String fetchOrderurl;
 	String takeTheOrder;
 	String completetheOrder;
-	TravelCostCalculation travelCostCalculation;
+	FareCalculationService travelCostCalculation;
+	double calculateamount;
 
-	public TestcasesForOrderPlacedInPresentNFuture() throws IOException {
+	public TestcasesForMoreThan3StopsInPresentFutureTest() throws IOException {
 		super();
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void setUp() {
 		restAssuredClient = new RestAssuredClient();
-		travelCostCalculation = new TravelCostCalculation();
+		travelCostCalculation = new FareCalculationService();
 		mapper = new ObjectMapper();
 		placeOrderurl = this.hostURL;
 
@@ -56,11 +64,11 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 	 */
 	@Test(priority = 1, groups = { "Cancel the new Order" })
 	public void placeNewOrderInPresent() throws ParseException, IOException {
-		String jsonReader = prop.getProperty("JsonFileReader");
+		String jsonReader = prop.getProperty("JsonFileReaderforMoreThan3stops");
 		if (jsonReader.equals("present")) {
 			try {
-				Json = mapper.readTree(new File(
-						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInPresent.json"));
+				json = mapper.readTree(new File(System.getProperty("user.dir")
+						+ "/src/main/resources/JsonData/PlaceOrderInPresentMoreThan3Stops.json"));
 			} catch (FileNotFoundException e) {
 				logger.error("Exception " + e);
 				logger.error("Properties file not found.");
@@ -68,18 +76,21 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 			}
 		} else if (jsonReader.equals("future")) {
 			try {
-				Json = mapper.readTree(new File(
-						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInFuture.json"));
+				json = mapper.readTree(new File(System.getProperty("user.dir")
+						+ "/src/main/resources/JsonData/PlaceOrderInFutureMoreThan3Stops.json"));
 			} catch (FileNotFoundException e) {
 				logger.error("Exception " + e);
 				logger.error("Properties file not found.");
 				Assert.fail("Properties file not found.");
 			}
 		}
-		response = restAssuredClient.requestPostCall(placeOrderurl, Json.toString());
+		response = restAssuredClient.requestPostCall(placeOrderurl, json.toString());
 		responseCode = response.getStatusCode();
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_201);
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_201);
 		id = response.jsonPath().get("id");
+		if(id<=0) {
+			Assert.assertFalse(true);
+		}
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
 		List<Integer> orderDistances = response.jsonPath().getList("drivingDistancesInMeters");
@@ -94,6 +105,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		logger.info("Total amount during order placed :" + amount);
 		String currency = orderFares.get("currency");
 		logger.info("Currency during order placed :" + currency);
+		Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
 	}
 
 	/**
@@ -109,13 +121,25 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		response = restAssuredClient.requestPutCall(canceltheOrder, "");
 		responseCode = response.getStatusCode();
 		logger.info("Status Code--->" + responseCode);
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_200, "Status code is not 200");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_200, "Status code is not 200");
 		id = response.jsonPath().get("id");
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
 		String orderStatus = response.jsonPath().get("status");
 		Assert.assertEquals(orderStatus, FrameworkConstants.CANCELLED);
 
+	}
+
+	/**
+	 * Common utility of mapping currency and amount
+	 */
+	public void mapCommonUtility() {
+		logger.info("Calculted Cost :" + calculateamount);
+		Map<String, String> orderFares = response.jsonPath().getMap("fare");
+		String amount = orderFares.get("amount");
+		String currency = orderFares.get("currency");
+		Assert.assertEquals(Double.valueOf(amount), calculateamount);
+		Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
 	}
 
 	/**
@@ -134,7 +158,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		id = response.jsonPath().get("id");
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_200, "Status code is not 200");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_200, "Status code is not 200");
 		String orderStatus = response.jsonPath().get("status");
 		Assert.assertEquals(orderStatus, FrameworkConstants.ASSIGNING);
 		List<Integer> orderDistances = response.jsonPath().getList("drivingDistancesInMeters");
@@ -152,45 +176,25 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		int time = Integer.parseInt(timeStamp);
 		logger.info("time captured" + time);
 		if (createdTime.equals(orderDateTime)) {
-			if (time >= FrameworkConstants.MORETHAN9PM && time <= FrameworkConstants.LESSTHAN11_59PM
-					|| time >= FrameworkConstants.LESSTHAN0AM && time <= FrameworkConstants.LESSTHAN5AM) {
-				double calculateamount = travelCostCalculation.TravelCostInBetween9to5TimeStamp(sumOfDistance);
-				logger.info("Calculted Cost :" + calculateamount);
-				Map<String, String> orderFares = response.jsonPath().getMap("fare");
-				String amount = orderFares.get("amount");
-				String currency = orderFares.get("currency");
-				Assert.assertEquals(Double.valueOf(amount), calculateamount);
-				Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
+			if (time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM
+					|| time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM) {
+				calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
+				mapCommonUtility();
 			} else {
-				double calculateamount = travelCostCalculation.TravelCostInNormalTimeStamp(sumOfDistance);
-				logger.info("Calculted Cost :" + calculateamount);
-				Map<String, String> orderFares = response.jsonPath().getMap("fare");
-				String amount = orderFares.get("amount");
-				String currency = orderFares.get("currency");
-				Assert.assertEquals(Double.valueOf(amount), calculateamount);
-				Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
+				calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
+				mapCommonUtility();
 			}
+		} else if (time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM
+				|| time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM) {
+			calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
+			mapCommonUtility();
+
 		} else {
-			if (time >= FrameworkConstants.MORETHAN9PM && time <= FrameworkConstants.LESSTHAN11_59PM
-					|| time >= FrameworkConstants.LESSTHAN0AM && time <= FrameworkConstants.LESSTHAN5AM) {
-				double calculateamount = travelCostCalculation.TravelCostInBetween9to5TimeStamp(sumOfDistance);
-				logger.info("Calculted Cost :" + calculateamount);
-				Map<String, String> orderFares = response.jsonPath().getMap("fare");
-				String amount = orderFares.get("amount");
-				String currency = orderFares.get("currency");
-				Assert.assertEquals(Double.valueOf(amount), calculateamount);
-				Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
-			} else {
-				double calculateamount = travelCostCalculation.TravelCostInNormalTimeStamp(sumOfDistance);
-				logger.info("Calculted Cost :" + calculateamount);
-				Map<String, String> orderFares = response.jsonPath().getMap("fare");
-				String amount = orderFares.get("amount");
-				String currency = orderFares.get("currency");
-				Assert.assertEquals(Double.valueOf(amount), calculateamount);
-				Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
-			}
+			calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
+			mapCommonUtility();
 		}
 	}
+
 
 	/**
 	 * 2.) Test Case:ASSIGNING->ONGOINING-> Take the Newly Created order after
@@ -208,7 +212,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		id = response.jsonPath().get("id");
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_200, "Status code is not 200");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_200, "Status code is not 200");
 		String orderStatus = response.jsonPath().get("status");
 		Assert.assertEquals(orderStatus, FrameworkConstants.ONGOING);
 
@@ -230,7 +234,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		id = response.jsonPath().get("id");
 		logger.info("New Order Id :" + id);
 		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_200, "Status code is not 200");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_200, "Status code is not 200");
 		String orderStatus = response.jsonPath().get("status");
 		Assert.assertEquals(orderStatus, FrameworkConstants.COMPLETED);
 
@@ -243,7 +247,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		responseCode = response.getStatusCode();
 		logger.info("Status Code--->" + responseCode);
 		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_422, "Status code is not 422");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
 	}
 
 	/**
@@ -340,7 +344,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends GlobalReader {
 		response = restAssuredClient.requestGetCall(fetchTheOrderWithWrongId);
 		responseCode = response.getStatusCode();
 		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCode.RESPONSE_STATUS_CODE_404, "Status code is not 404");
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_404, "Status code is not 404");
 	}
 
 }
