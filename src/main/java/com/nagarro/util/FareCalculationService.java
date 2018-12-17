@@ -16,7 +16,7 @@ public class FareCalculationService {
 	 * @return TotalCostOfJeourney
 	 */
 	public double travelCostInNormalTimeStamp(double sumOfDistance) {
-		double remainingDistanceForEach200Meter, TotalCostForJeourney, remainingCostForEach200Meter, TotalCost;
+		double remainingDistanceForEach200Meter, totalCostForJeourney, remainingCostForEach200Meter, totalCost;
 		if (sumOfDistance == FrameworkConstants.ZERO_KM_DISTANCE) {
 			return FrameworkConstants.ZERO_KM_DISTANCE;
 		} else if (sumOfDistance <= FrameworkConstants.FIRST_2KM_DISTANCE) {
@@ -25,9 +25,9 @@ public class FareCalculationService {
 			sumOfDistance = sumOfDistance - FrameworkConstants.FIRST_2KM_DISTANCE;
 			remainingDistanceForEach200Meter = sumOfDistance / (FrameworkConstants.DISTANCE200);
 			remainingCostForEach200Meter = remainingDistanceForEach200Meter * (FrameworkConstants.MORE_THAN_FIRST_2KM_DAY_COST);
-			TotalCost = FrameworkConstants.FIRST_2KM_DAY_COST + remainingCostForEach200Meter;
-			TotalCostForJeourney = Double.parseDouble(new DecimalFormat("##.##").format(TotalCost));
-			return TotalCostForJeourney;
+			totalCost = FrameworkConstants.FIRST_2KM_DAY_COST + remainingCostForEach200Meter;
+			totalCostForJeourney = Double.parseDouble(new DecimalFormat("##.##").format(totalCost));
+			return totalCostForJeourney;
 		}
 		return 0;
 	}
@@ -39,7 +39,7 @@ public class FareCalculationService {
 	 * @return TotalCostOfJeourney
 	 */
 	public double travelCostInBetween9to5TimeStamp(double sumOfDistance) {
-		double remainingDistanceForEach200Meter, TotalCostForJeourney, TotalCost;
+		double remainingDistanceForEach200Meter, totalCostForJeourney, totalCost;
 		if (sumOfDistance == FrameworkConstants.NIGHT_ZERO_KM_DISTANCE) {
 			return FrameworkConstants.NIGHT_ZERO_KM_COST;
 		} else if (sumOfDistance <= FrameworkConstants.NIGHT_FIRST_2KM_DISTANCE) {
@@ -47,10 +47,10 @@ public class FareCalculationService {
 		} else if (sumOfDistance >= FrameworkConstants.NIGHT_FIRST_2KM_DISTANCE) {
 			sumOfDistance = sumOfDistance - FrameworkConstants.NIGHT_FIRST_2KM_DISTANCE;
 			remainingDistanceForEach200Meter = sumOfDistance / (FrameworkConstants.DISTANCE200);
-			TotalCost = FrameworkConstants.NIGHT_FIRST_2KM_COST
+			totalCost = FrameworkConstants.NIGHT_FIRST_2KM_COST
 					+ (remainingDistanceForEach200Meter * (FrameworkConstants.NIGHT_MORE_THAN_FIRST_2KM_COST));
-			TotalCostForJeourney = Double.parseDouble(new DecimalFormat("##.##").format(TotalCost));
-			return TotalCostForJeourney;
+			totalCostForJeourney = Double.parseDouble(new DecimalFormat("##.##").format(totalCost));
+			return totalCostForJeourney;
 		}
 		return 0;
 	}

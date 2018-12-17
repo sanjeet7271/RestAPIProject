@@ -19,7 +19,7 @@ import com.nagarro.restassured.RestAssuredClient;
  * @author sanjeetpandit
  *
  */
-public class PlaceOrderInPastorWithWrongJsonTest extends BaseTest {
+public class PlaceOrderWithInvalideScenaioTest extends BaseTest {
 
 	String placeOrderurl;
 	ObjectMapper mapper;
@@ -29,7 +29,7 @@ public class PlaceOrderInPastorWithWrongJsonTest extends BaseTest {
 	JsonNode presentJson, futureJson, pastJson;
 	static int id;
 
-	public PlaceOrderInPastorWithWrongJsonTest() throws IOException {
+	public PlaceOrderWithInvalideScenaioTest() throws IOException {
 		super();
 	}
 

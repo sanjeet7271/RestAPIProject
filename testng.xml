@@ -41,7 +41,7 @@
 	</test>
 	<test name="Order Flow Test" preserve-order="true">
 		<classes>
-			<class name="com.nagarro.testCases.PlaceOrderInPastorWithWrongJsonTest" />
+			<class name="com.nagarro.testCases.PlaceOrderWithInvalideScenaioTest" />
 			<class name="com.nagarro.testCases.PlaceOrderWithAllSameStopTest" />
 		</classes>
 	</test>
