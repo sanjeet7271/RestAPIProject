@@ -19,8 +19,6 @@
 		<classes>
 			<class
 				name="com.nagarro.TestCases.TestcasesForOrderPlacedInPresentNFuture" />
-			<class name="com.nagarro.TestCases.PlaceOrderInPastorWrongJson" />
-			<class name="com.nagarro.TestCases.PlaceOrderWithAllSameStop" />
 		</classes>
 	</test>
 	<test name="Order Flow Test" preserve-order="true">
