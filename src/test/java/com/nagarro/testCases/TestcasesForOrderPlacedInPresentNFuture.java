@@ -363,7 +363,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 
 	@Test(priority = 16, groups = { "place order with wrong body" })
 	public void testcases_Verify__FetchTheOrderDetailsNotCreated() {
-		String fetchTheOrderWithWrongId = placeOrderurl + "/" + 1224;
+		String fetchTheOrderWithWrongId = placeOrderurl + "/" + 12314123;
 		response = restAssuredClient.requestGetCall(fetchTheOrderWithWrongId);
 		responseCode = response.getStatusCode();
 		RestAssured.defaultParser = Parser.JSON;
