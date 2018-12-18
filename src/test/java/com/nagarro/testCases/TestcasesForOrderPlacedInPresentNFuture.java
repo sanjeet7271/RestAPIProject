@@ -1,7 +1,5 @@
 package com.nagarro.testCases;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.parsing.Parser;
 import com.jayway.restassured.response.Response;
@@ -18,9 +15,9 @@ import com.nagarro.constants.FrameworkConstants;
 import com.nagarro.constants.StatusCodes;
 import com.nagarro.global.BaseTest;
 import com.nagarro.restassured.RestAssuredClient;
-import com.nagarro.util.FareCalculationService;
+import com.nagarro.util.CommonUtility;
 
-/** 
+/**
  * Test cases to place an Order, Fetch the Order, take the Order and Complete or
  * cancel the Order
  * 
@@ -29,7 +26,7 @@ import com.nagarro.util.FareCalculationService;
  */
 public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	String placeOrderurl;
-	ObjectMapper mapper;
+
 	Response response;
 	int responseCode;
 	RestAssuredClient restAssuredClient;
@@ -39,7 +36,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	String fetchOrderurl;
 	String takeTheOrder;
 	String completetheOrder;
-	FareCalculationService travelCostCalculation;
+	CommonUtility utility;
 	double calculateamount;
 
 	public TestcasesForOrderPlacedInPresentNFuture() throws IOException {
@@ -47,10 +44,10 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	public void setUp() {
+	public void setUp() throws IOException {
 		restAssuredClient = new RestAssuredClient();
-		travelCostCalculation = new FareCalculationService();
-		mapper = new ObjectMapper();
+		utility = new CommonUtility();
+
 		placeOrderurl = this.hostURL;
 
 	}
@@ -62,28 +59,9 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 1, groups = { "Cancel the new Order" })
-	public void placeNewOrderInPresent() throws ParseException, IOException {
-		String jsonReader = prop.getProperty("JsonFileReaderfor3stops");
-		if (jsonReader.equals("present")) {
-			try {
-				json = mapper.readTree(new File(
-						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInPresent.json"));
-			} catch (FileNotFoundException e) {
-				logger.error("Exception " + e);
-				logger.error("Properties file not found.");
-				Assert.fail("Properties file not found.");
-			}
-		} else if (jsonReader.equals("future")) {
-			try {
-				json = mapper.readTree(new File(
-						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInFuture.json"));
-			} catch (FileNotFoundException e) {
-				logger.error("Exception " + e);
-				logger.error("Properties file not found.");
-				Assert.fail("Properties file not found.");
-			}
-		}
+	@Test(priority = 1, groups = { "Place the new Order" })
+	public void testcase_Verify_PlaceNewOrder() throws ParseException, IOException {
+		json = utility.readJson();
 		response = restAssuredClient.requestPostCall(placeOrderurl, json.toString());
 		responseCode = response.getStatusCode();
 		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_201);
@@ -115,8 +93,9 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 2, groups = { "Cancel the new Order" }, dependsOnMethods = "placeNewOrderInPresent")
-	public void cancelOrder() {
+	@Test(priority = 2, groups = { "Cancel the new Order" })
+	public void testcases_Verify__CancelOrder() throws ParseException, IOException {
+		testcase_Verify_PlaceNewOrder();
 		canceltheOrder = this.hostURL + "/" + id + "/cancel";
 		response = restAssuredClient.requestPutCall(canceltheOrder, "");
 		responseCode = response.getStatusCode();
@@ -131,18 +110,6 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	}
 
 	/**
-	 * Common utility of mapping currency and amount
-	 */
-	public void mapCommonUtility() {
-		logger.info("Calculted Cost :" + calculateamount);
-		Map<String, String> orderFares = response.jsonPath().getMap("fare");
-		String amount = orderFares.get("amount");
-		String currency = orderFares.get("currency");
-		Assert.assertEquals(Double.valueOf(amount), calculateamount);
-		Assert.assertEquals(currency, FrameworkConstants.CURRENCY);
-	}
-
-	/**
 	 * 2.) Test Case:ASSIGNING-> Assign the Newly Created order after placed the
 	 * order
 	 * 
@@ -150,8 +117,8 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws IOException
 	 */
 	@Test(priority = 3, groups = { "complete the new Order" })
-	public void fetchTheOrderDetails() throws ParseException, IOException {
-		placeNewOrderInPresent();
+	public void testcases_Verify__FetchTheOrderDetails() throws ParseException, IOException {
+		testcase_Verify_PlaceNewOrder();
 		fetchOrderurl = this.hostURL + "/" + id;
 		response = restAssuredClient.requestGetCall(fetchOrderurl);
 		responseCode = response.getStatusCode();
@@ -167,34 +134,8 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 		for (Integer distance : orderDistances) {
 			sumOfDistance = sumOfDistance + distance;
 		}
-		logger.info("Calculted Distances :" + sumOfDistance);
-		String orderDateTime = response.jsonPath().get("orderDateTime");
-		logger.info("Calculted Distances :" + orderDateTime);
-		String createdTime = response.jsonPath().get("createdTime");
-		logger.info("Calculted Distances :" + createdTime);
-		String timeStamp = orderDateTime.substring(11, 13);
-		double time = Double.parseDouble(timeStamp);
-		logger.info("time captured" + time);
-		if (createdTime.equals(orderDateTime)) {
-			if ((time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM)
-					|| (time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM)) {
-				calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
-				//mapCommonUtility();
-			} else {
-				calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
-				//mapCommonUtility();
-			}
-		} else if ((time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM)
-				|| (time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM)) {
-			calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
-			//mapCommonUtility();
+		utility.verify_CalculateFare(sumOfDistance, response);
 
-		} else {
-			calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
-			//mapCommonUtility();
-		}
-		mapCommonUtility();
-		
 	}
 
 	/**
@@ -205,7 +146,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws IOException
 	 */
 	@Test(priority = 4, groups = { "complete the new Order" })
-	public void takeTheOrderDetails() {
+	public void testcases_Verify__TakeTheOrderDetails() {
 		takeTheOrder = this.hostURL + "/" + id + "/take";
 		response = restAssuredClient.requestPutCall(takeTheOrder, "");
 		responseCode = response.getStatusCode();
@@ -227,7 +168,7 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws IOException
 	 */
 	@Test(priority = 5, groups = { "complete the new Order" })
-	public void CompleteTheOrderDetails() {
+	public void testcases_Verify__CompleteTheOrderDetails() {
 		completetheOrder = this.hostURL + "/" + id + "/complete";
 		response = restAssuredClient.requestPutCall(completetheOrder, "");
 		responseCode = response.getStatusCode();
@@ -240,59 +181,63 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 		Assert.assertEquals(orderStatus, FrameworkConstants.COMPLETED);
 
 	}
+
 	/**
-	 * 2.) Test Case:ASSIGNING->ONGOINING->COMPLETE->ONGOINING take the completed the Newly Created order
+	 * 2.) Test Case:ASSIGNING->ONGOINING->COMPLETE->ONGOINING take the completed
+	 * the Newly Created order
 	 * 
 	 * 
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority=6)
-	public void takeTheCompletedOrder() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		CompleteTheOrderDetails();
+	@Test(priority = 6, groups = { "take the Order after Ongoing State" })
+	public void testcases_Verify__TakeTheOngoingOrder() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
 		takeTheOrder = this.hostURL + "/" + id + "/take";
 		response = restAssuredClient.requestPutCall(takeTheOrder, "");
-		responseCode = response.getStatusCode();
-		logger.info("Status Code--->" + responseCode);
-		String errorMessage = response.jsonPath().get("message");
-		logger.error("New Order Id :" + errorMessage);
-		Assert.assertEquals(errorMessage, FrameworkConstants.ORDER_NOT_IN_ASSIGNING_STATE);
-		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
+		utility.Verify_CustomErrorMessage(response);
 	}
-	
+
 	/**
-	 * 2.) Test Case:ASSIGNING->ONGOINING->cancel->ONGOINING take the cancelled the Newly Created order
+	 * 2.) Test Case:ASSIGNING->ONGOINING->COMPLETE->ONGOINING take the completed
+	 * the Newly Created order
 	 * 
 	 * 
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority=7)
-	public void takeTheCancelledOrder() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		cancelOrder();
+	@Test(priority = 7, groups = { "Take the Order just after completed" })
+	public void testcases_Verify__TakeTheCompletedOrder() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CompleteTheOrderDetails();
 		takeTheOrder = this.hostURL + "/" + id + "/take";
 		response = restAssuredClient.requestPutCall(takeTheOrder, "");
-		responseCode = response.getStatusCode();
-		logger.info("Status Code--->" + responseCode);
-		String errorMessage = response.jsonPath().get("message");
-		logger.error("New Order Id :" + errorMessage);
-		Assert.assertEquals(errorMessage, FrameworkConstants.ORDER_NOT_IN_ASSIGNING_STATE);
-		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
+		utility.Verify_CustomErrorMessage(response);
 	}
-	
+
+	/**
+	 * 2.) Test Case:ASSIGNING->ONGOINING->cancel->ONGOINING take the cancelled the
+	 * Newly Created order
+	 * 
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(priority = 8, groups = { "Take the Order after Cancelled" })
+	public void testcases_Verify__TakeTheCancelledOrder() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CancelOrder();
+		takeTheOrder = this.hostURL + "/" + id + "/take";
+		response = restAssuredClient.requestPutCall(takeTheOrder, "");
+		utility.Verify_CustomErrorMessage(response);
+	}
+
 	/**
 	 * Common utility for response code customize code 422
 	 */
-	public void CommonUtilityForResponseCode422() {
-		responseCode = response.getStatusCode();
-		logger.info("Status Code--->" + responseCode);
-		RestAssured.defaultParser = Parser.JSON;
-		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
-	}
 
 	/**
 	 * 3.) Test Case:ASSIGNING->COMPLETE Complete the Newly Created order
@@ -300,12 +245,12 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 8, groups = { "complete the Order just after creation" })
-	public void CompleteTheNewOrder() throws ParseException, IOException {
-		fetchTheOrderDetails();
+	@Test(priority = 9, groups = { "complete Order from Assign State" })
+	public void testcases_Verify__CompleteTheNewOrder() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
 		completetheOrder = this.hostURL + "/" + id + "/complete";
 		response = restAssuredClient.requestPutCall(completetheOrder, "");
-		CommonUtilityForResponseCode422();
+		utility.Verify_ResponseCode422(response);
 
 	}
 
@@ -316,14 +261,14 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 9, groups = { "Complete the order after Completed" })
-	public void CompleteTheOrderAfterCompleted() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		CompleteTheOrderDetails();
+	@Test(priority = 10, groups = { "Complete the order after Completed" })
+	public void testcases_Verify__CompleteTheOrderAfterCompleted() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CompleteTheOrderDetails();
 		completetheOrder = this.hostURL + "/" + id + "/complete";
 		response = restAssuredClient.requestPutCall(completetheOrder, "");
-		CommonUtilityForResponseCode422();
+		utility.Verify_ResponseCode422(response);
 	}
 
 	/**
@@ -333,14 +278,31 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 10, groups = { "Cancel the Order after Completed" })
-	public void cancelTheOrderAfterCompleted() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		CompleteTheOrderDetails();
+	@Test(priority = 11, groups = { "Cancel the Order after Completed" })
+	public void testcases_Verify__CancelTheOrderAfterCompleted() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CompleteTheOrderDetails();
 		canceltheOrder = this.hostURL + "/" + id + "/cancel";
 		response = restAssuredClient.requestPutCall(canceltheOrder, "");
-		CommonUtilityForResponseCode422();
+		utility.Verify_ResponseCode422(response);
+	}
+
+	/**
+	 * 4.) Test Case:ASSIGNING->ONGOINING->COMPLETE->ONGOINING Cancel the Newly
+	 * Created order and cancel again
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(priority = 12, groups = { "Take The Order after Completed" })
+	public void testcases_Verify__TakeTheOrderAfterCompleted() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CompleteTheOrderDetails();
+		takeTheOrder = this.hostURL + "/" + id + "/take";
+		response = restAssuredClient.requestPutCall(takeTheOrder, "");
+		utility.Verify_ResponseCode422(response);
 	}
 
 	/**
@@ -351,14 +313,14 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 11, groups = { "Cancel the order after cancelled" })
-	public void cancelTheOrderAfterCancel() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		cancelOrder();
+	@Test(priority = 13, groups = { "Cancel the order after cancelled" })
+	public void testcases_Verify__CancelTheOrderAfterCancel() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CancelOrder();
 		canceltheOrder = this.hostURL + "/" + id + "/cancel";
 		response = restAssuredClient.requestPutCall(canceltheOrder, "");
-		CommonUtilityForResponseCode422();
+		utility.Verify_ResponseCode422(response);
 	}
 
 	/**
@@ -368,22 +330,39 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 12, groups = { "Complete the Order after Cancelled" })
-	public void CompleteTheOrderAfterCancel() throws ParseException, IOException {
-		fetchTheOrderDetails();
-		takeTheOrderDetails();
-		cancelOrder();
+	@Test(priority = 14, groups = { "Complete the Order after Cancelled" })
+	public void testcases_Verify__CompleteTheOrderAfterCancel() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CancelOrder();
 		completetheOrder = this.hostURL + "/" + id + "/complete";
 		response = restAssuredClient.requestPutCall(completetheOrder, "");
-		CommonUtilityForResponseCode422();
+		utility.Verify_ResponseCode422(response);
+	}
+
+	/**
+	 * 4.) Test Case:ASSIGNING->ONGOINING->CANCELLED->ONGOINING Cancel the Newly
+	 * Created order and cancel again
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(priority = 15, groups = { "Take The Order after Cancelled" })
+	public void testcases_Verify__TakeTheOrderAfterCancelled() throws ParseException, IOException {
+		testcases_Verify__FetchTheOrderDetails();
+		testcases_Verify__TakeTheOrderDetails();
+		testcases_Verify__CancelOrder();
+		takeTheOrder = this.hostURL + "/" + id + "/take";
+		response = restAssuredClient.requestPutCall(takeTheOrder, "");
+		utility.Verify_CustomErrorMessage(response);
 	}
 
 	/**
 	 * Test with wrong Order Id
 	 */
 
-	@Test(priority = 13, groups = { "place order with wrong body" })
-	public void fetchTheOrderDetailsNotCreated() {
+	@Test(priority = 16, groups = { "place order with wrong body" })
+	public void testcases_Verify__FetchTheOrderDetailsNotCreated() {
 		String fetchTheOrderWithWrongId = placeOrderurl + "/" + 1224;
 		response = restAssuredClient.requestGetCall(fetchTheOrderWithWrongId);
 		responseCode = response.getStatusCode();

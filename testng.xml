@@ -5,13 +5,19 @@
 		preserve-order="true">
 		<groups>
 			<run>
+				<include name="Place the new Order" />
 				<include name="Cancel the new Order" />
 				<include name="complete the new Order" />
-				<include name="complete the Order just after creation" />
+				<include name="take the Order after Ongoing State"/>
+				<include name="Take the Order just after completed"/>
+				<include name="Take the Order after Cancelled"/>
+				<include name="complete Order from Assign State"/>
 				<include name="Complete the order after Completed" />
 				<include name="Cancel the Order after Completed" />
+				<include name="Take The Order after Completed"/>
 				<include name="Cancel the order after cancelled" />
 				<include name="Complete the Order after Cancelled" />
+				<include name="Take The Order after Cancelled"/>
 				<include name="place order with wrong body" />
 			</run>
 
@@ -24,13 +30,19 @@
 		preserve-order="true">
 		<groups>
 			<run>
+				<include name="Place the new Order" />
 				<include name="Cancel the new Order" />
 				<include name="complete the new Order" />
-				<include name="complete the Order just after creation" />
+				<include name="take the Order after Ongoing State"/>
+				<include name="Take the Order just after completed"/>
+				<include name="Take the Order after Cancelled"/>
+				<include name="complete Order from Assign State"/>
 				<include name="Complete the order after Completed" />
 				<include name="Cancel the Order after Completed" />
+				<include name="Take The Order after Completed"/>
 				<include name="Cancel the order after cancelled" />
 				<include name="Complete the Order after Cancelled" />
+				<include name="Take The Order after Cancelled"/>
 				<include name="place order with wrong body" />
 			</run>
 
@@ -41,8 +53,8 @@
 	</test>
 	<test name="Order Flow Test" preserve-order="true">
 		<classes>
-			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithInvalideScenaioTest" />
-			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithAllSameStopTest" />
+			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithInvalideScenaio" />
+			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithAllSameStop" />
 		</classes>
 	</test>
 </suite>

@@ -3,6 +3,7 @@ package com.nagarro.restassured;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+
 /**
  * Rest-Assured methods GET, POST and PUT call
  * 

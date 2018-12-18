@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Global class for reading configuration file and host URL
+ * 
  * @author sanjeetpandit
  *
  */

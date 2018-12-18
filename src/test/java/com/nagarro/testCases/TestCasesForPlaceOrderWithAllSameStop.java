@@ -20,11 +20,12 @@ import com.nagarro.global.BaseTest;
 import com.nagarro.restassured.RestAssuredClient;
 
 /**
+ * Test scenario with same stops
  * 
  * @author sanjeetpandit
  *
  */
-public class TestCasesForPlaceOrderWithAllSameStopTest extends BaseTest {
+public class TestCasesForPlaceOrderWithAllSameStop extends BaseTest {
 	String placeOrderurl;
 	ObjectMapper mapper;
 	Response response;
@@ -32,7 +33,7 @@ public class TestCasesForPlaceOrderWithAllSameStopTest extends BaseTest {
 	RestAssuredClient restAssuredClient;
 	JsonNode presentJson;
 
-	public TestCasesForPlaceOrderWithAllSameStopTest() throws IOException {
+	public TestCasesForPlaceOrderWithAllSameStop() throws IOException {
 		super();
 	}
 

@@ -14,12 +14,14 @@ import com.nagarro.constants.FrameworkConstants;
 import com.nagarro.constants.StatusCodes;
 import com.nagarro.global.BaseTest;
 import com.nagarro.restassured.RestAssuredClient;
+
 /**
+ * Invalid scenario with wrong body
  * 
  * @author sanjeetpandit
  *
  */
-public class TestCasesForPlaceOrderWithInvalideScenaioTest extends BaseTest {
+public class TestCasesForPlaceOrderWithInvalideScenaio extends BaseTest {
 
 	String placeOrderurl;
 	ObjectMapper mapper;
@@ -29,7 +31,7 @@ public class TestCasesForPlaceOrderWithInvalideScenaioTest extends BaseTest {
 	JsonNode presentJson, futureJson, pastJson;
 	static int id;
 
-	public TestCasesForPlaceOrderWithInvalideScenaioTest() throws IOException {
+	public TestCasesForPlaceOrderWithInvalideScenaio() throws IOException {
 		super();
 	}
 
@@ -47,11 +49,11 @@ public class TestCasesForPlaceOrderWithInvalideScenaioTest extends BaseTest {
 	 * @throws JsonProcessingException
 	 * @throws IOException
 	 */
-	@Test(priority=1)
+	@Test(priority = 1)
 	public void placeNewOrderInPast() throws JsonProcessingException, IOException {
 		try {
-			pastJson = mapper.readTree(new File(
-					System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInPast.json"));
+			pastJson = mapper.readTree(
+					new File(System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInPast.json"));
 		} catch (FileNotFoundException e) {
 			logger.error("Exception " + e);
 			logger.error("Properties file not found.");
@@ -62,10 +64,11 @@ public class TestCasesForPlaceOrderWithInvalideScenaioTest extends BaseTest {
 		String errorMessage = response.jsonPath().get("message");
 		logger.error("New Order Id :" + errorMessage);
 		Assert.assertEquals(errorMessage, FrameworkConstants.PAST_ERROR_MESSAGE);
-		
+
 		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_400);
 	}
-	@Test(priority=2)
+
+	@Test(priority = 2)
 	public void placeNewOrderWithWronJson() throws JsonProcessingException, IOException {
 		try {
 			pastJson = mapper.readTree(new File(
@@ -83,4 +86,3 @@ public class TestCasesForPlaceOrderWithInvalideScenaioTest extends BaseTest {
 		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_400);
 	}
 }
-
