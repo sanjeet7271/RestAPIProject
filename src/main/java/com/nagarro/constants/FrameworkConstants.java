@@ -35,5 +35,6 @@ public class FrameworkConstants {
 	
 	public static final String PAST_ERROR_MESSAGE="field orderAt is behind the present time";
 	public static final String WRONG_JSON_ERROR_MESSAGE="error in field(s): stops";
+	public static final String ORDER_NOT_IN_ASSIGNING_STATE="Order status is not ASSIGNING";
 	
 }

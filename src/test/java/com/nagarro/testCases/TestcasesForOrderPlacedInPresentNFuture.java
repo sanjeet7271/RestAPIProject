@@ -20,14 +20,14 @@ import com.nagarro.global.BaseTest;
 import com.nagarro.restassured.RestAssuredClient;
 import com.nagarro.util.FareCalculationService;
 
-/**
+/** 
  * Test cases to place an Order, Fetch the Order, take the Order and Complete or
  * cancel the Order
  * 
  * @author sanjeetpandit
  *
  */
-public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
+public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 	String placeOrderurl;
 	ObjectMapper mapper;
 	Response response;
@@ -42,7 +42,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	FareCalculationService travelCostCalculation;
 	double calculateamount;
 
-	public TestcasesForMoreThan3StopsInPresentFutureTest() throws IOException {
+	public TestcasesForOrderPlacedInPresentNFuture() throws IOException {
 		super();
 	}
 
@@ -64,11 +64,11 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 */
 	@Test(priority = 1, groups = { "Cancel the new Order" })
 	public void placeNewOrderInPresent() throws ParseException, IOException {
-		String jsonReader = prop.getProperty("JsonFileReaderforMoreThan3stops");
+		String jsonReader = prop.getProperty("JsonFileReaderfor3stops");
 		if (jsonReader.equals("present")) {
 			try {
-				json = mapper.readTree(new File(System.getProperty("user.dir")
-						+ "/src/main/resources/JsonData/PlaceOrderInPresentMoreThan3Stops.json"));
+				json = mapper.readTree(new File(
+						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInPresent.json"));
 			} catch (FileNotFoundException e) {
 				logger.error("Exception " + e);
 				logger.error("Properties file not found.");
@@ -76,8 +76,8 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 			}
 		} else if (jsonReader.equals("future")) {
 			try {
-				json = mapper.readTree(new File(System.getProperty("user.dir")
-						+ "/src/main/resources/JsonData/PlaceOrderInFutureMoreThan3Stops.json"));
+				json = mapper.readTree(new File(
+						System.getProperty("user.dir") + "/src/main/resources/JsonData/PlaceOrderInFuture.json"));
 			} catch (FileNotFoundException e) {
 				logger.error("Exception " + e);
 				logger.error("Properties file not found.");
@@ -88,7 +88,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 		responseCode = response.getStatusCode();
 		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_201);
 		id = response.jsonPath().get("id");
-		if(id<=0) {
+		if (id <= 0) {
 			Assert.assertFalse(true);
 		}
 		logger.info("New Order Id :" + id);
@@ -115,7 +115,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 2, groups = { "Cancel the new Order" })
+	@Test(priority = 2, groups = { "Cancel the new Order" }, dependsOnMethods = "placeNewOrderInPresent")
 	public void cancelOrder() {
 		canceltheOrder = this.hostURL + "/" + id + "/cancel";
 		response = restAssuredClient.requestPutCall(canceltheOrder, "");
@@ -195,7 +195,6 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 		}
 	}
 
-
 	/**
 	 * 2.) Test Case:ASSIGNING->ONGOINING-> Take the Newly Created order after
 	 * assigned
@@ -239,7 +238,50 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 		Assert.assertEquals(orderStatus, FrameworkConstants.COMPLETED);
 
 	}
-
+	/**
+	 * 2.) Test Case:ASSIGNING->ONGOINING->COMPLETE->ONGOINING take the completed the Newly Created order
+	 * 
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(priority=6)
+	public void takeTheCompletedOrder() throws ParseException, IOException {
+		fetchTheOrderDetails();
+		takeTheOrderDetails();
+		CompleteTheOrderDetails();
+		takeTheOrder = this.hostURL + "/" + id + "/take";
+		response = restAssuredClient.requestPutCall(takeTheOrder, "");
+		responseCode = response.getStatusCode();
+		logger.info("Status Code--->" + responseCode);
+		String errorMessage = response.jsonPath().get("message");
+		logger.error("New Order Id :" + errorMessage);
+		Assert.assertEquals(errorMessage, FrameworkConstants.ORDER_NOT_IN_ASSIGNING_STATE);
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
+	}
+	
+	/**
+	 * 2.) Test Case:ASSIGNING->ONGOINING->cancel->ONGOINING take the cancelled the Newly Created order
+	 * 
+	 * 
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(priority=7)
+	public void takeTheCancelledOrder() throws ParseException, IOException {
+		fetchTheOrderDetails();
+		takeTheOrderDetails();
+		cancelOrder();
+		takeTheOrder = this.hostURL + "/" + id + "/take";
+		response = restAssuredClient.requestPutCall(takeTheOrder, "");
+		responseCode = response.getStatusCode();
+		logger.info("Status Code--->" + responseCode);
+		String errorMessage = response.jsonPath().get("message");
+		logger.error("New Order Id :" + errorMessage);
+		Assert.assertEquals(errorMessage, FrameworkConstants.ORDER_NOT_IN_ASSIGNING_STATE);
+		Assert.assertEquals(responseCode, StatusCodes.RESPONSE_STATUS_CODE_422, "Status code is not 422");
+	}
+	
 	/**
 	 * Common utility for response code customize code 422
 	 */
@@ -256,7 +298,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 6, groups = { "complete the Order just after creation" })
+	@Test(priority = 8, groups = { "complete the Order just after creation" })
 	public void CompleteTheNewOrder() throws ParseException, IOException {
 		fetchTheOrderDetails();
 		completetheOrder = this.hostURL + "/" + id + "/complete";
@@ -272,7 +314,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 7, groups = { "Complete the order after Completed" })
+	@Test(priority = 9, groups = { "Complete the order after Completed" })
 	public void CompleteTheOrderAfterCompleted() throws ParseException, IOException {
 		fetchTheOrderDetails();
 		takeTheOrderDetails();
@@ -289,7 +331,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 8, groups = { "Cancel the Order after Completed" })
+	@Test(priority = 10, groups = { "Cancel the Order after Completed" })
 	public void cancelTheOrderAfterCompleted() throws ParseException, IOException {
 		fetchTheOrderDetails();
 		takeTheOrderDetails();
@@ -307,7 +349,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 9, groups = { "Cancel the order after cancelled" })
+	@Test(priority = 11, groups = { "Cancel the order after cancelled" })
 	public void cancelTheOrderAfterCancel() throws ParseException, IOException {
 		fetchTheOrderDetails();
 		takeTheOrderDetails();
@@ -324,7 +366,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(priority = 10, groups = { "Complete the Order after Cancelled" })
+	@Test(priority = 12, groups = { "Complete the Order after Cancelled" })
 	public void CompleteTheOrderAfterCancel() throws ParseException, IOException {
 		fetchTheOrderDetails();
 		takeTheOrderDetails();
@@ -338,7 +380,7 @@ public class TestcasesForMoreThan3StopsInPresentFutureTest extends BaseTest {
 	 * Test with wrong Order Id
 	 */
 
-	@Test(priority = 11, groups = { "place order with wrong body" })
+	@Test(priority = 13, groups = { "place order with wrong body" })
 	public void fetchTheOrderDetailsNotCreated() {
 		String fetchTheOrderWithWrongId = placeOrderurl + "/" + 1224;
 		response = restAssuredClient.requestGetCall(fetchTheOrderWithWrongId);

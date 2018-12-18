@@ -24,7 +24,7 @@ import com.nagarro.restassured.RestAssuredClient;
  * @author sanjeetpandit
  *
  */
-public class PlaceOrderWithAllSameStopTest extends BaseTest {
+public class TestCasesForPlaceOrderWithAllSameStopTest extends BaseTest {
 	String placeOrderurl;
 	ObjectMapper mapper;
 	Response response;
@@ -32,7 +32,7 @@ public class PlaceOrderWithAllSameStopTest extends BaseTest {
 	RestAssuredClient restAssuredClient;
 	JsonNode presentJson;
 
-	public PlaceOrderWithAllSameStopTest() throws IOException {
+	public TestCasesForPlaceOrderWithAllSameStopTest() throws IOException {
 		super();
 	}
 

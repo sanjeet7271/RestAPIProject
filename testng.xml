@@ -17,7 +17,7 @@
 
 		</groups>
 		<classes>
-			<class name="com.nagarro.testCases.TestcasesForOrderPlacedInPresentNFutureTest" />
+			<class name="com.nagarro.testCases.TestcasesForOrderPlacedInPresentNFuture" />
 		</classes>
 		</test>
 		<test name="place order at more than 3 stops in present and future"
@@ -36,13 +36,13 @@
 
 		</groups>
 		<classes>
-			<class name="com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFutureTest" />
+			<class name="com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFuture" />
 		</classes>
 	</test>
 	<test name="Order Flow Test" preserve-order="true">
 		<classes>
-			<class name="com.nagarro.testCases.PlaceOrderWithInvalideScenaioTest" />
-			<class name="com.nagarro.testCases.PlaceOrderWithAllSameStopTest" />
+			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithInvalideScenaioTest" />
+			<class name="com.nagarro.testCases.TestCasesForPlaceOrderWithAllSameStopTest" />
 		</classes>
 	</test>
 </suite>
