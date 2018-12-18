@@ -173,26 +173,28 @@ public class TestcasesForOrderPlacedInPresentNFuture extends BaseTest {
 		String createdTime = response.jsonPath().get("createdTime");
 		logger.info("Calculted Distances :" + createdTime);
 		String timeStamp = orderDateTime.substring(11, 13);
-		int time = Integer.parseInt(timeStamp);
+		double time = Double.parseDouble(timeStamp);
 		logger.info("time captured" + time);
 		if (createdTime.equals(orderDateTime)) {
-			if (time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM
-					|| time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM) {
+			if ((time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM)
+					|| (time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM)) {
 				calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
-				mapCommonUtility();
+				//mapCommonUtility();
 			} else {
 				calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
-				mapCommonUtility();
+				//mapCommonUtility();
 			}
-		} else if (time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM
-				|| time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM) {
+		} else if ((time >= FrameworkConstants.MORE_THAN_9PM && time <= FrameworkConstants.LESS_THAN_11_59PM)
+				|| (time >= FrameworkConstants.LESS_THAN_0AM && time <= FrameworkConstants.LESS_THAN_5AM)) {
 			calculateamount = travelCostCalculation.travelCostInBetween9to5TimeStamp(sumOfDistance);
-			mapCommonUtility();
+			//mapCommonUtility();
 
 		} else {
 			calculateamount = travelCostCalculation.travelCostInNormalTimeStamp(sumOfDistance);
-			mapCommonUtility();
+			//mapCommonUtility();
 		}
+		mapCommonUtility();
+		
 	}
 
 	/**
