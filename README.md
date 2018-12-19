@@ -5,8 +5,8 @@
 3. Api should be running on local machine on localhost i.e. `http://localhost:51544`
 ## How to install & Run using command prompt
 1. Please extract the project at your desired path.
-2. Go to `src/test/resources/application.properties` file and update configurations. 
-	* Update `{host URL}/v1/orders` in application.properties file ,i.e. where api is hosted  e.g. {host URL}=`localhost:51544`
+2. Go to `src/test/resources/config/config.properties` file and update configurations. 
+	* Update `{localhost}/v1/orders` in application.properties file ,i.e. where api is hosted  e.g. {localhost}=`localhost:51544`
   	* Please Enter `present` and `future` to run test cases for Order place in Present and future
 3.  Open the command prompt and go to the project path.
 4.  Run the command "mvn clean install test"
