@@ -6,7 +6,7 @@
 ## How to install & Run using command prompt
 1. Please extract the project at your desired path.
 2. Go to `src/test/resources/config/config.properties` file and update configurations. 
-	* Update `{localhost}/v1/orders` in application.properties file ,i.e. where api is hosted  e.g. {localhost}=`localhost:51544`
+	* Update `{localhost}/v1/orders` in config.properties file ,i.e. where api is hosted  e.g. {localhost}=`localhost:51544`
   	* Please Enter `present` and `future` to run test cases for Order place in Present and future
 3.  Open the command prompt and go to the project path.
 4.  Run the command "mvn clean install test"
