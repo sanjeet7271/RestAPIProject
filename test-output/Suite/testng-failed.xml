@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test thread-count="5" name="place order at 3 stops in present and future(failed)">
+    <groups>
+      <run>
+        <include name="Place the new Order"/>
+        <include name="Cancel the new Order"/>
+        <include name="complete the new Order"/>
+        <include name="take the Order after Ongoing State"/>
+        <include name="Take the Order just after completed"/>
+        <include name="Take the Order after Cancelled"/>
+        <include name="complete Order from Assign State"/>
+        <include name="Complete the order after Completed"/>
+        <include name="Cancel the Order after Completed"/>
+        <include name="Take The Order after Completed"/>
+        <include name="Cancel the order after cancelled"/>
+        <include name="Complete the Order after Cancelled"/>
+        <include name="Take The Order after Cancelled"/>
+        <include name="place order with wrong body"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.nagarro.testCases.TestcasesForOrderPlacedInPresentNFuture">
+        <methods>
+          <include name="testcases_Verify__CancelTheOrderAfterCancel"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.nagarro.testCases.TestcasesForOrderPlacedInPresentNFuture -->
+    </classes>
+  </test> <!-- place order at 3 stops in present and future(failed) -->
+  <test thread-count="5" name="place order at more than 3 stops in present and future(failed)">
+    <groups>
+      <run>
+        <include name="Place the new Order"/>
+        <include name="Cancel the new Order"/>
+        <include name="complete the new Order"/>
+        <include name="take the Order after Ongoing State"/>
+        <include name="Take the Order just after completed"/>
+        <include name="Take the Order after Cancelled"/>
+        <include name="complete Order from Assign State"/>
+        <include name="Complete the order after Completed"/>
+        <include name="Cancel the Order after Completed"/>
+        <include name="Take The Order after Completed"/>
+        <include name="Cancel the order after cancelled"/>
+        <include name="Complete the Order after Cancelled"/>
+        <include name="Take The Order after Cancelled"/>
+        <include name="place order with wrong body"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFuture">
+        <methods>
+          <include name="setUp"/>
+          <include name="testcases_Verify__CancelTheOrderAfterCancel"/>
+        </methods>
+      </class> <!-- com.nagarro.testCases.TestcasesForMoreThan3StopsInPresentFuture -->
+    </classes>
+  </test> <!-- place order at more than 3 stops in present and future(failed) -->
+  <test thread-count="5" name="Order Flow Test(failed)">
+    <classes>
+      <class name="com.nagarro.testCases.TestCasesForPlaceOrderWithAllSameStop">
+        <methods>
+          <include name="setUp"/>
+          <include name="placeNewOrderWithAllSameStop"/>
+        </methods>
+      </class> <!-- com.nagarro.testCases.TestCasesForPlaceOrderWithAllSameStop -->
+    </classes>
+  </test> <!-- Order Flow Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
